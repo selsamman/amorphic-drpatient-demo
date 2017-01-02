@@ -1,0 +1,21 @@
+{
+    "name": "amorphic-drpatient-demo",
+    "description": "Amorphic MVP",
+    "homepage": "https://github.com/selsamman/amorphic-drpatient-demo.git",
+    "version": "1.0.0",
+    "dependencies": {
+        "underscore": "*",
+        "q": "1.*",
+        "amorphic": "*"
+    },
+    "directories": {
+    },
+    "engines": {
+        "node": ">=0.8.0"
+    },
+    "repository": {
+        "type": "git",
+            "url": "git://github.com/selsamman/amorphic-drpatient-demo.git"
+    },
+     "optionalDependencies": {}
+}
