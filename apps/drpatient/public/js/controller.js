@@ -10,7 +10,6 @@ module.exports.controller = function (objectTemplate, uses)
         // Main object references
         doctors:        {type: Array, of: Doctor, value: []},
         patients:       {type: Array, of: Patient, value: []},
-        selectedDoctor: {type: Doctor},
 
         // New doctors and patient properties
         doctorName:     {type: String},
@@ -34,7 +33,7 @@ module.exports.controller = function (objectTemplate, uses)
         }},
 
         addAppointment:  {on: "server", body: function () {
-            (new Appointment(this.appTime, this.selectedDoctor, this.appPatient));
+            (new Appointment(this.appTime, this.appDoctor, this.appPatient));
             this.appTime = null;
         }}
     });

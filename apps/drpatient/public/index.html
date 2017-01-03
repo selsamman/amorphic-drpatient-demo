@@ -3,8 +3,14 @@
 
 <head>
 
-    <!-- boiler plate -->
+    <!-- standard software scripts --->
+    <script src="../../common/js/lib/underscore.js"></script>
     <script src="/modules/q/q.js?ver=0q.js?ver=0"></script>
+    <script src="../../common/js/lib/jquery.js"></script>
+    <script src="../../common/js/lib/bootstrap.min.js"></script>
+    <link href="../../common/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- amorphic static scripts -->
     <script src="/bindster/index.js?ver=0"></script>
     <script src="/supertype/index.js?ver=0"></script>
     <script src="/semotus/index.js?ver=0"></script>
@@ -13,10 +19,6 @@
     <!-- Dynamically generated script that will instatiate the controller -->
     <script src="/amorphic/init/drpatient.js?ver=0"></script>
 
-    <script src="../../common/js/lib/underscore.js"></script>
-    <script src="../../common/js/lib/jquery.js"></script>
-    <script src="../../common/js/lib/bootstrap.min.js"></script>
-    <link href="../../common/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
@@ -34,11 +36,11 @@
                 <div class="panel-body">
 
                     <b:iterate on="doctors" with="doctor">
-                        <p class="bg-success"><a href="#" b:bind="doctor.name" b:onclick="selectedDoctor = doctor"></a></p>
+                        <p class="bg-success"><a href="#" b:bind="doctor.name" b:onclick="appDoctor = doctor"></a></p>
                     </b:iterate>
 
                     <p>
-                        <input b:bind="doctorName" class="form-control" b:placeholder="Name" b:onenter="addDoctor()"/>
+                        <input b:bind="doctorName" class="form-control" placeholder="Name" b:onenter="addDoctor()"/>
                         <br /><button class="btn btn-primary btn-sm" b:onclick="addDoctor()">Add</button>
                     </p>
 
@@ -65,11 +67,11 @@
         </div>
 
         <div class="col-md-4">
-            <div class="panel panel-default" b:showif="selectedDoctor">
-                <div class="panel-heading">Appointments for <span b:bind="selectedDoctor.name"></span></div>
+            <div class="panel panel-default" b:showif="appDoctor">
+                <div class="panel-heading">Appointments for <span b:bind="appDoctor.name"></span></div>
                 <div class="panel-body">
 
-                    <b:iterate on="selectedDoctor.appointments" with="appointment">
+                    <b:iterate on="appDoctor.appointments" with="appointment">
                         <p class="bg-success">
                             <span b:bind="appointment.patient.name"></span>
                             (<span b:bind="appointment.when" b:format="formatDateTime()"></span>)
