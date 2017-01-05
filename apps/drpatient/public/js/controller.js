@@ -8,8 +8,23 @@ module.exports.controller = function (objectTemplate, uses)
     Controller = BaseController.extend("Controller", {
 
         // Main object references
-        doctors:        {type: Array, of: Doctor, value: []},
-        patients:       {type: Array, of: Patient, value: []},
+        doctors:        {type: Array, of: Doctor, value: [], autoFetch: true},
+        doctorsFetch:   {on: "server", body: function () {
+            return Doctor.fetchByQuery({}).then(function (doctors) {
+                this.doctors = doctors;
+                this.doctorsPersistor={isFetched: true, isFetching: false};
+                return doctors;
+            }.bind(this));
+        }},
+
+        patients:       {type: Array, of: Patient, value: [], autoFetch: true},
+        patientsFetch:   {on: "server", body: function () {
+            return Patient.fetchByQuery().then(function (patients) {
+                this.patients = patients;
+                this.patientsPeristor={isFetched: true, isFetching: false};
+                return patients;
+            }.bind(this));
+        }},
 
         // New doctors and patient properties
         doctorName:     {type: String},
@@ -24,17 +39,26 @@ module.exports.controller = function (objectTemplate, uses)
             var patient = new Patient(this.patientName);
             this.patients.push(patient);
             this.patientName = "";
+            patient.persist({});
         }},
 
         addDoctor:  {on: "server", body: function () {
             var doctor = new Doctor(this.doctorName)
             this.doctors.push(doctor)
             this.doctorName = "";
+            doctor.persist({});
         }},
 
         addAppointment:  {on: "server", body: function () {
-            (new Appointment(this.appTime, this.appDoctor, this.appPatient));
+            var appointment = (new Appointment(this.appTime, this.appDoctor, this.appPatient));
             this.appTime = null;
+            appointment.persist({});
+        }},
+
+        sync: {on: "server", body: function () {
+            return objectTemplate.synchronizeKnexTableFromTemplate(Doctor)
+                .then(function () {return objectTemplate.synchronizeKnexTableFromTemplate(Patient)})
+                .then(function () {return objectTemplate.synchronizeKnexTableFromTemplate(Appointment)});
         }}
     });
 }

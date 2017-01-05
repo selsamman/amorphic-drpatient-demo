@@ -6,7 +6,7 @@
     "dependencies": {
         "underscore": "*",
         "q": "1.*",
-        "amorphic": "*"
+        "amorphic": "git://github.com/nikmash/persistor.git#refactor"
     },
     "directories": {
     },

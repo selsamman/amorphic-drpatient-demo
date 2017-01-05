@@ -35,7 +35,7 @@
                 <div class="panel-heading">Doctors</div>
                 <div class="panel-body">
 
-                    <b:iterate on="doctors" with="doctor">
+                    <b:iterate on="doctorsGet()" with="doctor">
                         <p class="bg-success"><a href="#" b:bind="doctor.name" b:onclick="appDoctor = doctor"></a></p>
                     </b:iterate>
 
@@ -53,7 +53,7 @@
                 <div class="panel-heading">Patients</div>
                 <div class="panel-body">
 
-                    <b:iterate on="patients" with="patient">
+                    <b:iterate on="patientsGet()" with="patient">
                         <p class="bg-success" b:bind="patient.name"></p>
                     </b:iterate>
 
